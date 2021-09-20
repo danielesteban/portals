@@ -1,7 +1,6 @@
 import {
   Color,
   DataTexture,
-  FloatType,
   LinearFilter,
   Mesh,
   Object3D,
@@ -13,7 +12,6 @@ import {
   RGBFormat,
   ShaderMaterial,
   ShaderLib,
-  sRGBEncoding,
   UniformsUtils,
   Vector3,
   WebGLMultisampleRenderTarget,
@@ -121,26 +119,25 @@ class Portal extends Mesh {
   onBeforeRender(renderer, scene, viewer) {
     this.updateCamera(viewer);
     const { camera, destination, player, renderTarget } = this;
-
     player.mesh.visible = true;
     this.visible = false;
     destination.visible = false;
-		const currentTarget = renderer.getRenderTarget();
-		const currentXrEnabled = renderer.xr.enabled;
-		const currentShadowAutoUpdate = renderer.shadowMap.autoUpdate;
-		renderer.xr.enabled = false;
-		renderer.shadowMap.autoUpdate = false;
-		renderer.setRenderTarget(renderTarget);
-		renderer.state.buffers.depth.setMask(true);
-		if (renderer.autoClear === false) renderer.clear();
-		renderer.render(scene, camera);
-		renderer.xr.enabled = currentXrEnabled;
-		renderer.shadowMap.autoUpdate = currentShadowAutoUpdate;
+    const currentTarget = renderer.getRenderTarget();
+    const currentXrEnabled = renderer.xr.enabled;
+    const currentShadowAutoUpdate = renderer.shadowMap.autoUpdate;
+    renderer.xr.enabled = false;
+    renderer.shadowMap.autoUpdate = false;
+    renderer.setRenderTarget(renderTarget);
+    renderer.state.buffers.depth.setMask(true);
+    if (renderer.autoClear === false) renderer.clear();
+    renderer.render(scene, camera);
+    renderer.xr.enabled = currentXrEnabled;
+    renderer.shadowMap.autoUpdate = currentShadowAutoUpdate;
     renderer.setRenderTarget(currentTarget);
-		const viewport = viewer.viewport;
-		if (viewport !== undefined) {
-			renderer.state.viewport(viewport);
-		}
+    const viewport = viewer.viewport;
+    if (viewport !== undefined) {
+      renderer.state.viewport(viewport);
+    }
     destination.visible = true;
     this.visible = true;
     player.mesh.visible = false;

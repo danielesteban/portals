@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import commonjs from '@rollup/plugin-commonjs';
 import copy from 'rollup-plugin-copy';
 import livereload from 'rollup-plugin-livereload';
 import resolve from '@rollup/plugin-node-resolve';
@@ -16,10 +15,8 @@ export default {
     format: 'iife',
   },
   plugins: [
-    commonjs(),
     resolve({
       browser: true,
-      moduleDirectories: [path.join(__dirname, 'node_modules')],
     }),
     copy({
       targets: [
